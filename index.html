@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MED BASHA PRO v1.3.5</title>
+    <title>MED BASHA PRO v1.3.7</title>
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -68,7 +68,7 @@
 
         <div class="glass-card p-6 rounded-3xl space-y-4 shadow-2xl border border-white/5">
             <button @click="loginGoogle()" class="w-full p-5 bg-white text-slate-900 font-black text-xs uppercase tracking-wider rounded-xl flex items-center justify-center gap-3 active:scale-95 transition-transform">
-                <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.47 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
                 Sincronizar con Google
             </button>
 
@@ -138,7 +138,7 @@
         </div>
 
         <button @click="screen = 3; calcularTotales(); actualizarIconos()" class="w-full mt-6 glass-card p-5 rounded-2xl flex justify-between items-center active:bg-white/5 active:scale-95 transition">
-            <span class="font-bold text-sm uppercase italic">Resumen Nómina (Ciclo 16-15)</span>
+            <span class="font-bold text-sm uppercase italic">Resumen Nómina & Historial</span>
             <i data-lucide="chevron-right" class="w-5 h-5 text-slate-600"></i>
         </button>
     </div>
@@ -239,42 +239,50 @@
     <div x-show="screen === 3" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" x-cloak class="p-4 max-w-md mx-auto pb-32">
         <header class="flex justify-between items-center mb-4">
             <button @click="screen = 1" class="p-2 bg-slate-800 rounded-full active:scale-90 transition"><i data-lucide="arrow-left"></i></button>
-            <h2 class="text-xl font-black uppercase tracking-tighter italic">Nómina del Ciclo</h2>
+            <h2 class="text-xl font-black uppercase tracking-tighter italic" x-text="'Totales ' + monthNames[currentMonth]"></h2 >
         </header>
 
+        <!-- CUADRO DE ARRIBA: TOTALES EXCLUSIVOS DEL MES NATURAL (1 AL 31) -->
         <div class="mb-6">
             <div class="bg-blue-600 text-[11px] font-black text-white px-4 py-2 rounded-t-2xl flex justify-between items-center">
-                <span x-text="cicloLabel"></span>
+                <span x-text="'Mes Natural: 01 al 31 de ' + monthNames[currentMonth]"></span>
                 <span class="firma-footer text-[10px]">medbasha</span>
             </div>
             <div class="glass-card p-4 rounded-b-2xl border-t-2 border-blue-600 shadow-2xl">
                 <div class="grid grid-cols-3 gap-4 mb-4 border-b border-white/10 pb-4">
                     <div class="text-center">
-                        <span class="block text-[8px] text-slate-500 font-black uppercase">Horas Ciclo</span>
-                        <p class="text-2xl font-black text-blue-400" x-text="stats.hTotales"></p>
+                        <span class="block text-[8px] text-slate-500 font-black uppercase">Horas Mes</span>
+                        <p class="text-2xl font-black text-blue-400" x-text="statsMes.hTotales"></p>
                     </div>
                     <div class="text-center border-l border-white/5">
                         <span class="block text-[8px] text-slate-500 font-black uppercase">Dietas (C+C)</span>
-                        <p class="text-2xl font-black text-green-400" x-text="stats.numDietas"></p>
+                        <p class="text-2xl font-black text-green-400" x-text="statsMes.numDietas"></p>
                     </div>
                     <div class="text-center border-l border-white/5">
                         <span class="block text-[8px] text-slate-500 font-black uppercase">KM Totales</span>
-                        <p class="text-xl font-black text-cyan-400 mt-1" x-text="stats.kmTotales"></p>
+                        <p class="text-xl font-black text-cyan-400 mt-1" x-text="statsMes.kmTotales"></p>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-3 gap-2">
                     <div class="text-center">
-                        <span class="block text-[8px] text-slate-500 font-black uppercase">Nocturnidad (Horas)</span>
-                        <p class="text-2xl font-black text-purple-400" x-text="stats.hoursNocturnas"></p>
+                        <span class="block text-[8px] text-slate-500 font-black uppercase">Nocturnas</span>
+                        <p class="text-xl font-black text-purple-400 mt-1" x-text="statsMes.hoursNocturnas"></p>
                     </div>
                     <div class="text-center border-l border-white/5">
-                        <span class="block text-[8px] text-slate-500 font-black uppercase">Turnos Partidos</span>
-                        <p class="text-2xl font-black text-orange-400" x-text="stats.numPartidas"></p>
+                        <span class="block text-[8px] text-slate-500 font-black uppercase">Partidos</span>
+                        <p class="text-2xl font-black text-orange-400" x-text="statsMes.numPartidas"></p>
+                    </div>
+                    <div class="text-center border-l border-white/5">
+                        <span class="block text-[8px] text-slate-500 font-black uppercase">Festivos</span>
+                        <p class="text-2xl font-black text-red-500" x-text="statsMes.numFestivos"></p>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- CUADRO DE ABAJO: HISTORIAL FILTRADO EN EXCLUSIVA POR EL CICLO DE NÓMINA (16 AL 15) -->
+        <h3 class="text-xs font-black uppercase tracking-wider text-slate-400 mb-3 pl-1" x-text="'Historial del Ciclo Activo (' + cicloLabel + ')'"></h3>
+        
         <div class="space-y-8">
             <template x-for="(semana, index) in semanasAgrupadas" :key="index">
                 <div class="space-y-2">
@@ -333,7 +341,7 @@
             </template>
             <template x-if="semanasAgrupadas.length === 0">
                 <div class="glass-card p-6 rounded-2xl text-center text-xs text-slate-500 italic">
-                    No hay turnos registrados en el mes de <span x-text="monthNames[currentMonth]"></span>
+                    No hay turnos registrados en este tramo de la nómina activa.
                 </div>
             </template>
         </div>
@@ -415,7 +423,7 @@
 
         function appBus() {
             return {
-                version: 'v1.3.5',
+                version: 'v1.3.7',
                 screen: 0, 
                 userId: 'local',
                 isAnon: false,
@@ -436,7 +444,7 @@
                 
                 historial:[], 
                 semanasAgrupadas:[],
-                stats: { hTotales: '0:00', numPartidas: 0, numDietas: 0, numFestivos: 0, kmTotales: 0, hoursNocturnas: '00:00' },
+                statsMes: { hTotales: '0:00', numPartidas: 0, numDietas: 0, numFestivos: 0, kmTotales: 0, hoursNocturnas: '00:00' },
                 
                 manualComida: false,
                 manualCena: false,
@@ -542,16 +550,14 @@
 
                     nodoUser.on('value', (snapshot) => {
                         const turnosActualizados = [];
-                        
                         snapshot.forEach((childSnapshot) => {
                             turnosActualizados.push(childSnapshot.val());
                         });
 
-                        if (turnosActualizados.length > 0) {
-                            this.historial = turnosActualizados.sort((a, b) => b.id - a.id);
-                            this.saveHist();
-                            this.calcularTotales();
-                        }
+                        // FUSIÓN Y ENLAZADO DIRECTO DE DATOS DESDE LA NUBE DE FORMA SEGURA
+                        this.historial = turnosActualizados.sort((a, b) => b.id - a.id);
+                        this.saveHist();
+                        this.calcularTotales();
                         this.firebaseIniciado = true;
                         this.actualizarIconos();
                     }, (error) => {
@@ -741,34 +747,35 @@
                         creadoEn: new Date().toISOString()
                     };
                     
+                    // CORRECCIÓN DE SINCRONIZACIÓN FUSIONANDO LOS DATOS EN LOCAL DE INMEDIATO PARA EVITAR PISADO VISUAL
+                    const idx = this.historial.findIndex(h => h.fecha === this.fechaSeleccionada);
+                    if(idx > -1) { this.historial[idx] = reg; } else { this.historial.unshift(reg); }
+                    this.saveHist(); 
+                    this.calcularTotales();
+
                     if (db && this.userId !== 'local') {
                         db.ref('usuarios/' + this.userId + '/' + reg.id).update(reg)
                             .then(() => {
                                 if (advertencias.length > 0) {
-                                    this.notificar("⚠️ Guardado. Te falta: " + advertencias.join(', '), true);
+                                    this.notificar("⚠️ Sincronizado. Faltaba: " + advertencias.join(', '), true);
                                 } else {
                                     this.notificar("¡Sincronizado en tu Nube Privada!");
                                 }
                             })
                             .catch(e => {
-                                this.notificar("Guardado local (Sin conexión)", true);
+                                this.notificar("Guardado local protegido", true);
                             });
                     } else {
                         if (advertencias.length > 0) {
-                            this.notificar("⚠️ Local. Te falta: " + advertencias.join(', '), true);
+                            this.notificar("⚠️ Local. Falta: " + advertencias.join(', '), true);
                         } else {
                             this.notificar("Guardado en Memoria Local", false);
                         }
                     }
 
-                    const idx = this.historial.findIndex(h => h.fecha === this.fechaSeleccionada);
-                    if(idx > -1) { this.historial[idx] = reg; } else { this.historial.unshift(reg); }
-                    
-                    this.saveHist(); 
-                    this.calcularTotales();
                     localStorage.removeItem('bus_borrador_seguridad');
                     this.screen = 1; 
-                    this.actualizarIconos();
+                    this.$nextTick(() => { this.calcularTotales(); this.actualizarIconos(); });
                 },
 
                 notificar(msg, isError = false) {
@@ -787,47 +794,61 @@
 
                 calcularTotales() {
                     const hoy = new Date();
-                    const d = hoy.getDate(), m = hoy.getMonth(), y = hoy.getFullYear();
-                    let inicio, fin;
-                    
-                    if (d >= 16) { inicio = new Date(y, m, 16); fin = new Date(y, m + 1, 15); } 
-                    else { inicio = new Date(y, m - 1, 16); fin = new Date(y, m, 15); }
-                    this.cicloLabel = `Ciclo: 16/${inicio.getMonth()+1} al 15/${fin.getMonth()+1}`;
+                    const y = this.currentYear;
+                    const m = this.currentMonth;
+
+                    // 1. FILTRADO PARA EL CUADRO SUPERIOR: MES NATURAL COMPLETO (01 AL 31)
+                    const mesCadenaFiltro = String(m + 1).padStart(2, '0');
+                    let filtradosMesNatural = this.historial.filter(h => h.fecha.split('/')[1] === mesCadenaFiltro);
+
+                    let minMes = 0, kmMes = 0, dieMes = 0, partMes = 0, nocMesMins = 0, festMes = 0;
+                    filtradosMesNatural.forEach(h => {
+                        let [hh,mm] = h.horas.split(':').map(Number);
+                        minMes += (hh * 60 + mm);
+                        kmMes += h.km;
+                        dieMes += h.dietas;
+                        if(h.esPartida) partMes++;
+                        if(h.esFestivo) festMes++;
+                        nocMesMins += this.getMinutosNocturnos(h);
+                    });
+
+                    this.statsMes = {
+                        hTotales: `${Math.floor(minMes/60)}:${(minMes%60).toString().padStart(2,'0')}`,
+                        kmTotales: kmMes + ' KM',
+                        numDietas: dieMes,
+                        numPartidas: partMes,
+                        numFestivos: festMes,
+                        hoursNocturnas: this.formatMins(nocMesMins)
+                    };
+
+                    // 2. FILTRADO PARA LAS SEMANAS DE ABAJO: CICLO DE NÓMINA DINÁMICO (16 AL 15)
+                    let inicioCiclo, finCiclo;
+                    if (hoy.getDate() >= 16) { 
+                        inicioCiclo = new Date(hoy.getFullYear(), hoy.getMonth(), 16); 
+                        finCiclo = new Date(hoy.getFullYear(), hoy.getMonth() + 1, 15); 
+                    } else { 
+                        inicioCiclo = new Date(hoy.getFullYear(), hoy.getMonth() - 1, 16); 
+                        finCiclo = new Date(hoy.getFullYear(), hoy.getMonth(), 15); 
+                    }
+                    this.cicloLabel = `16/${inicioCiclo.getMonth()+1} al 15/${finCiclo.getMonth()+1}`;
 
                     let filtradosCiclo = this.historial.filter(h => {
                         const [diaReg, mesReg] = h.fecha.split('/').map(Number);
-                        let añoReg = y;
-                        if (mesReg === 12 && inicio.getMonth() === 11) añoReg = inicio.getFullYear();
-                        if (mesReg === 1 && fin.getMonth() === 0) añoReg = fin.getFullYear();
+                        let añoReg = hoy.getFullYear();
+                        if (mesReg === 12 && inicioCiclo.getMonth() === 11) añoReg = inicioCiclo.getFullYear();
+                        if (mesReg === 1 && finCiclo.getMonth() === 0) añoReg = finCiclo.getFullYear();
                         const fReg = new Date(añoReg, mesReg - 1, diaReg);
-                        return fReg >= inicio && fReg <= fin;
+                        return fReg >= inicioCiclo && fReg <= finCiclo;
                     });
-
-                    let mt = 0, kt = 0, dt = 0, pt = 0, ntMins = 0;
-                    filtradosCiclo.forEach(h => {
-                        let [hh,mm] = h.horas.split(':').map(Number); 
-                        mt += (hh * 60 + mm); 
-                        kt += h.km; 
-                        dt += h.dietas;
-                        if(h.esPartida) pt++; 
-                        ntMins += this.getMinutosNocturnos(h);
-                    });
-                    
-                    this.stats = { 
-                        hTotales: `${Math.floor(mt/60)}:${(mt%60).toString().padStart(2,'0')}`, 
-                        kmTotales: kt + ' KM', 
-                        numDietas: dt, 
-                        numPartidas: pt, 
-                        hoursNocturnas: this.formatMins(ntMins)
-                    };
-
-                    const mesFiltroCadena = String(this.currentMonth + 1).padStart(2, '0');
-                    let registrosMesSeleccionado = this.historial.filter(h => h.fecha.split('/')[1] === mesFiltroCadena);
 
                     const gruposSemanales = {};
-                    registrosMesSeleccionado.forEach(h => {
+                    filtradosCiclo.forEach(h => {
                         const [dia, mes] = h.fecha.split('/').map(Number);
-                        const numSemana = this.getWeekNumber(new Date(this.currentYear, mes - 1, dia));
+                        let añoConstruido = hoy.getFullYear();
+                        if (mes === 12 && inicioCiclo.getMonth() === 11) añoConstruido = inicioCiclo.getFullYear();
+                        if (mes === 1 && finCiclo.getMonth() === 0) añoConstruido = finCiclo.getFullYear();
+                        
+                        const numSemana = this.getWeekNumber(new Date(añoConstruido, mes - 1, dia));
                         
                         if (!gruposSemanales[numSemana]) {
                             gruposSemanales[numSemana] = { 
@@ -868,20 +889,18 @@
 
                 getRegistrosCicloActual() {
                     const hoy = new Date();
-                    const d = hoy.getDate(), m = hoy.getMonth(), y = hoy.getFullYear();
                     let inicio, fin;
-                    
-                    if (d >= 16) { 
-                        inicio = new Date(y, m, 16); 
-                        fin = new Date(y, m + 1, 15); 
+                    if (hoy.getDate() >= 16) { 
+                        inicio = new Date(hoy.getFullYear(), hoy.getMonth(), 16); 
+                        fin = new Date(hoy.getFullYear(), hoy.getMonth() + 1, 15); 
                     } else { 
-                        inicio = new Date(y, m - 1, 16); 
-                        fin = new Date(y, m, 15); 
+                        inicio = new Date(hoy.getFullYear(), hoy.getMonth() - 1, 16); 
+                        fin = new Date(hoy.getFullYear(), hoy.getMonth(), 15); 
                     }
 
                     return this.historial.filter(h => {
                         const [diaReg, mesReg] = h.fecha.split('/').map(Number);
-                        let añoReg = y;
+                        let añoReg = hoy.getFullYear();
                         if (mesReg === 12 && inicio.getMonth() === 11) añoReg = inicio.getFullYear();
                         if (mesReg === 1 && fin.getMonth() === 0) añoReg = fin.getFullYear();
                         const fReg = new Date(añoReg, mesReg - 1, diaReg);
@@ -916,7 +935,6 @@
                     let filtrados = this.getRegistrosCicloActual();
                     if(filtrados.length === 0) return this.notificar("No hay datos en este ciclo", true);
 
-                    // CÁLCULO DE TOTALES PARA EL CUADRO DE NÓMINA
                     let minsAcumulados = 0;
                     let dietasAcumuladas = 0;
                     let kmAcumulados = 0;
@@ -929,7 +947,6 @@
                         let nocMins = this.getMinutosNocturnos(r);
                         let nocStr = nocMins > 0 ? this.formatMins(nocMins) : '-';
                         
-                        // Sumas
                         let [hh, mm] = r.horas.split(':').map(Number);
                         minsAcumulados += (hh * 60 + mm);
                         dietasAcumuladas += r.dietas;
@@ -969,7 +986,6 @@
                                 th { background-color: #f8fafc; color: #475569; font-weight: 800; text-transform: uppercase; font-size: 11px; }
                                 tr:nth-child(even) { background-color: #f1f5f9; }
                                 
-                                /* Estilo de cuadro de totales para presentar a administración */
                                 .totales-card { background-color: #f8fafc; border: 2px solid #3b82f6; border-radius: 12px; padding: 20px; margin-top: 25px; display: grid; grid-template-cols: repeat(3, 1fr); gap: 15px; }
                                 .total-item { text-align: center; }
                                 .total-item span { display: block; font-size: 10px; color: #64748b; font-weight: 800; text-transform: uppercase; margin-bottom: 5px; }
